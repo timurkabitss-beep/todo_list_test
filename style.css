@@ -247,7 +247,7 @@ h1 {
     text-decoration-thickness: 2px;
 }
 
-.del {
+.edit, .del {
     flex: none;
     width: 32px;
     height: 32px;
@@ -258,14 +258,37 @@ h1 {
     color: var(--muted);
     border: 0;
     border-radius: 8px;
-    font-size: 1.4rem;
     line-height: 1;
 }
 
-    .del:hover {
-        color: var(--danger);
-        background: color-mix(in srgb, var(--danger) 12%, transparent);
-    }
+.edit {
+    font-size: 1.05rem;
+}
+
+.del {
+    font-size: 1.4rem;
+}
+
+.edit:hover {
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.del:hover {
+    color: var(--danger);
+    background: color-mix(in srgb, var(--danger) 12%, transparent);
+}
+
+.edit-input {
+    flex: 1;
+    min-width: 0;
+    padding: 6px 10px;
+    font: inherit;
+    color: inherit;
+    background: var(--bg);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+}
 
 .empty {
     margin: 32px 0;

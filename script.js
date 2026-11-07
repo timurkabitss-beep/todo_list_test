@@ -130,6 +130,7 @@
         li.appendChild(del);
         return li;
     }
+
     function render() {
         var visible = tasks.filter(function (t) {
             if (filter === 'active') return !t.done;
