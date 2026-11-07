@@ -51,9 +51,41 @@
     }
 
     function clearDone() {
+        var count = tasks.filter(function (t) { return t.done; }).length;
+        if (!count) return;
+        if (!confirm('Удалить выполненные задачи (' + count + ')?')) return;
         tasks = tasks.filter(function (t) { return !t.done; });
         save();
         render();
+    }
+
+    function startEdit(task, textEl) {
+        var field = document.createElement('input');
+        field.type = 'text';
+        field.className = 'edit-input';
+        field.maxLength = 120;
+        field.value = task.text;
+        field.setAttribute('aria-label', 'Редактировать задачу');
+        textEl.replaceWith(field);
+        field.focus();
+        field.select();
+
+        var finished = false;
+        function finish(saveChanges) {
+            if (finished) return;
+            finished = true;
+            var value = field.value.trim();
+            if (saveChanges && value && value !== task.text) {
+                task.text = value;
+                save();
+            }
+            render();
+        }
+        field.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') finish(true);
+            if (e.key === 'Escape') finish(false);
+        });
+        field.addEventListener('blur', function () { finish(true); });
     }
 
     // ---------- Отрисовка ----------
@@ -75,6 +107,15 @@
         var text = document.createElement('span');
         text.className = 'text';
         text.textContent = task.text; // textContent защищает от XSS
+        text.title = 'Двойной клик — редактировать';
+        text.addEventListener('dblclick', function () { startEdit(task, text); });
+
+        var edit = document.createElement('button');
+        edit.type = 'button';
+        edit.className = 'edit';
+        edit.innerHTML = '&#9998;';
+        edit.setAttribute('aria-label', 'Редактировать задачу: ' + task.text);
+        edit.addEventListener('click', function () { startEdit(task, text); });
 
         var del = document.createElement('button');
         del.type = 'button';
@@ -85,10 +126,10 @@
 
         li.appendChild(label);
         li.appendChild(text);
+        li.appendChild(edit);
         li.appendChild(del);
         return li;
     }
-
     function render() {
         var visible = tasks.filter(function (t) {
             if (filter === 'active') return !t.done;
