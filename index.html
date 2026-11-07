@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Список задач</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main class="app">
+        <header class="head">
+            <h1>Задачи</h1>
+            <p class="counter" id="counter" aria-live="polite"></p>
+        </header>
+
+        <form class="add" id="add-form" autocomplete="off">
+            <input id="task-input" type="text" maxlength="120" placeholder="Что нужно сделать?" aria-label="Новая задача">
+            <button type="submit">Добавить</button>
+        </form>
+
+        <nav class="filters" id="filters" aria-label="Фильтр задач">
+            <button type="button" data-filter="all" class="is-active">Все</button>
+            <button type="button" data-filter="active">Активные</button>
+            <button type="button" data-filter="done">Выполненные</button>
+        </nav>
+
+        <ul class="list" id="task-list"></ul>
+        <p class="empty" id="empty" hidden></p>
+
+        <footer class="foot">
+            <button type="button" class="link" id="clear-done">Удалить выполненные</button>
+        </footer>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
